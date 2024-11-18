@@ -22,15 +22,6 @@ int WindowSDL::CreateWindow()
 		return 1;
 	}
 
-	//m_winSurface = SDL_GetWindowSurface(m_window);
-	//// Make sure getting the surface succeeded
-	//if (!m_winSurface) {
-	//	std::cout << "Error getting surface: " << SDL_GetError() << std::endl;
-	//	system("pause");
-	//	// End the program
-	//	return 1;
-	//}
-
 	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
 	if (!m_renderer) {
 		std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;
@@ -50,24 +41,31 @@ bool WindowSDL::IsWindowCreated()
 
 void WindowSDL::Draw()
 {
-	//SDL_FillRect(m_winSurface, NULL, SDL_MapRGB(m_winSurface->format, 255, 0, 0));
-
 	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-
-	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-
 	SDL_Rect r;
 	r.x = 150;
 	r.y = 25;
 	r.h = 75;
 	r.w = 120;
-
 	SDL_RenderFillRect(m_renderer, &r); // Draw a filled rectangle
 
-	//SDL_UpdateWindowSurface(m_window);
+	// Coordonnées du centre du disque et son rayon
+	int centerX = 320;  // Par exemple, au centre de la fenêtre
+	int centerY = 240;
+	int radius = 100;   // Rayon du disque
 
+	SDL_SetRenderDrawColor(m_renderer, 255, 0, 255, 255);
+	// Parcourir tous les pixels dans un carré autour du cercle
+	for (int y = centerY - radius; y <= centerY + radius; y++) {
+		for (int x = centerX - radius; x <= centerX + radius; x++) {
+			// Vérifier si le pixel est à l'intérieur du cercle
+			if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) {
+				// Dessiner le point à cette position
+				SDL_RenderDrawPoint(m_renderer, x, y);
+			}
+		}
+	}
 	SDL_RenderPresent(m_renderer);
-
 }
 
 void WindowSDL::Clear()
@@ -80,7 +78,6 @@ void WindowSDL::Kill()
 	SDL_DestroyWindow(m_window);
 	SDL_DestroyRenderer(m_renderer);
 	m_window = NULL;
-	m_winSurface = NULL;
 	m_renderer = NULL;
 
 	SDL_Quit();

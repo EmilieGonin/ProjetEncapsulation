@@ -269,13 +269,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\PlayerInput.h" />
+    <ClInclude Include="..\..\include\PlayerInputRayLib.h" />
+    <ClInclude Include="..\..\include\PlayerInputSDL.h" />
     <ClInclude Include="..\..\include\resource_dir.h" />
+    <ClInclude Include="..\..\include\Sprite.h" />
+    <ClInclude Include="..\..\include\SpriteRayLib.h" />
+    <ClInclude Include="..\..\include\SpriteSDL.h" />
+    <ClInclude Include="..\..\include\Text.h" />
+    <ClInclude Include="..\..\include\TextRayLib.h" />
+    <ClInclude Include="..\..\include\TextSDL.h" />
     <ClInclude Include="..\..\include\Window.h" />
+    <ClInclude Include="..\..\include\WindowRayLib.h" />
     <ClInclude Include="..\..\include\WindowSDL.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\PlayerInput.cpp" />
+    <ClCompile Include="..\..\src\PlayerInputRayLib.cpp" />
+    <ClCompile Include="..\..\src\PlayerInputSDL.cpp" />
+    <ClCompile Include="..\..\src\Sprite.cpp" />
+    <ClCompile Include="..\..\src\SpriteRayLib.cpp" />
+    <ClCompile Include="..\..\src\SpriteSDL.cpp" />
+    <ClCompile Include="..\..\src\Text.cpp" />
+    <ClCompile Include="..\..\src\TextRayLib.cpp" />
+    <ClCompile Include="..\..\src\TextSDL.cpp" />
     <ClCompile Include="..\..\src\Window.cpp" />
+    <ClCompile Include="..\..\src\WindowRayLib.cpp" />
     <ClCompile Include="..\..\src\WindowSDL.cpp" />
   </ItemGroup>
   <ItemGroup>

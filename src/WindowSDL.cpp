@@ -55,7 +55,6 @@ void WindowSDL::Draw()
 	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 
 	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-	SDL_RenderDrawLine(m_renderer, 10, 10, 50, 25); // Draw a line
 
 	SDL_Rect r;
 	r.x = 150;

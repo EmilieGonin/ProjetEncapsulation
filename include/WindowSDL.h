@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "Window.h"
+#include "math.h"
 
 class WindowSDL : public Window
 {
@@ -18,7 +19,6 @@ public:
 private:
 
 	SDL_Window* m_window = NULL;
-	SDL_Surface* m_winSurface = NULL;
 	SDL_Renderer* m_renderer = NULL;	
 };
 

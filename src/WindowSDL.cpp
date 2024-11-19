@@ -17,6 +17,13 @@ int WindowSDL::InitLib()
 		return 1;
 	}
 
+	// Initialize SDL_image with PNG loading subsystem
+	if (IMG_Init(IMG_INIT_PNG) < 0) {
+		std::cout << "Error initializing SDL_image: " << IMG_GetError() << std::endl;
+		system("pause");
+		return 1;
+	}
+
 	return 0;
 }
 
@@ -45,10 +52,11 @@ int WindowSDL::CreateWindow()
 		std::cout << "Error loading font: " << TTF_GetError() << std::endl;
 		return false;
 	}
-	if (TTF_Init() == -1) std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
 
 	// Initialiser TextSDL
 	m_fps = new TextSDL("", std::make_pair(10,10), { 0, 255, 0, 255 });
+
+	m_sprites.push_back(new SpriteSDL("../../resources/Pokeball.png", 400, 200, m_renderer));
 
 	return 0;
 }
@@ -98,6 +106,12 @@ void WindowSDL::Draw()
 	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
 
+	for (auto sprite : m_sprites)
+	{
+		SDL_Texture* texture = reinterpret_cast<SDL_Texture*>(sprite->Get());
+		SDL_RenderCopy(m_renderer, texture, NULL, NULL);
+	}
+
 	// Coordonn�es du centre du disque et son rayon
 	int centerX = 320;  // Par exemple, au centre de la fen�tre
 	int centerY = 240;
@@ -117,6 +131,7 @@ void WindowSDL::Draw()
 			}
 		}
 	}
+
 	SDL_RenderPresent(m_renderer);
 }
 
@@ -129,19 +144,23 @@ void WindowSDL::Kill()
 {
 	SDL_DestroyWindow(m_window);
 	SDL_DestroyRenderer(m_renderer);
+	//SDL_DestroyTexture(m_texture);
+
 	m_window = NULL;
 	m_renderer = NULL;
+	m_sprites.clear();
 
 	if (m_fps) 
 	{
 		if (m_font)
 		{
 			TTF_CloseFont(m_font);
-			m_font = nullptr;
+			m_font = NULL;
 		}
 		delete m_fps;
 		m_fps = NULL;
 	}
 
+	IMG_Quit();
 	SDL_Quit();
 }

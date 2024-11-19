@@ -113,28 +113,14 @@ void WindowSDL::Draw()
 		SDL_Texture* texture = *reinterpret_cast<SDL_Texture**>(sprite->Get());
 
 		SDL_RenderCopy(m_renderer, texture, NULL, &destRect);
-		SDL_Delay(16);
 	}
 
-	//// Coordonn�es du centre du disque et son rayon
-	//int centerX = 320;  // Par exemple, au centre de la fen�tre
-	//int centerY = 240;
-	//int radius = 50;   // Rayon du disque
-
-	//SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-	//// Parcourir tous les pixels dans un carr� autour du cercle
-	//for (int y = centerY - radius; y <= centerY + radius; y++) 
-	//{
-	//	for (int x = centerX - radius; x <= centerX + radius; x++) 
-	//	{
-	//		// V�rifier si le pixel est � l'int�rieur du cercle
-	//		if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) 
-	//		{
-	//			// Dessiner le point � cette position
-	//			SDL_RenderDrawPoint(m_renderer, x, y);
-	//		}
-	//	}
-	//}
+	// Limitation à 60 FPS
+	Uint32 frameTicks = SDL_GetTicks() - startTicks;
+	if (frameTicks < 1000 / 60) 
+	{
+		SDL_Delay(1000 / 60 - frameTicks);
+	}
 
 	SDL_RenderPresent(m_renderer);
 }

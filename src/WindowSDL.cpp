@@ -41,9 +41,7 @@ int WindowSDL::CreateWindow()
 	// Initialiser TextSDL
 	m_text = new TextSDL(m_renderer);
 	if (!m_text->LoadFont("font.ttf", 24)) return 1;
-
-	Draw();
-
+	
 	return 0;
 }
 
@@ -63,7 +61,7 @@ void WindowSDL::Draw()
 	fps = 1000.0f / (currentTicks - lastTicks);
 	lastTicks = currentTicks;
 
-	// Nettoyer l'écran
+	// Nettoyer l'ï¿½cran
 	SDL_SetRenderDrawColor(m_renderer, 25, 25, 112, 255);
 	SDL_RenderClear(m_renderer);
 
@@ -71,21 +69,21 @@ void WindowSDL::Draw()
 	SDL_Color color = { 0, 255, 0, 255 };
 	m_text->RenderText("FPS: " + std::to_string((int)fps), 10, 10, color);
 
-	// Coordonnées du centre du disque et son rayon
-	int centerX = 320;  // Par exemple, au centre de la fenêtre
+	// Coordonnï¿½es du centre du disque et son rayon
+	int centerX = 320;  // Par exemple, au centre de la fenï¿½tre
 	int centerY = 240;
 	int radius = 50;   // Rayon du disque
 
 	SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-	// Parcourir tous les pixels dans un carré autour du cercle
+	// Parcourir tous les pixels dans un carrï¿½ autour du cercle
 	for (int y = centerY - radius; y <= centerY + radius; y++) 
 	{
 		for (int x = centerX - radius; x <= centerX + radius; x++) 
 		{
-			// Vérifier si le pixel est à l'intérieur du cercle
+			// Vï¿½rifier si le pixel est ï¿½ l'intï¿½rieur du cercle
 			if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) 
 			{
-				// Dessiner le point à cette position
+				// Dessiner le point ï¿½ cette position
 				SDL_RenderDrawPoint(m_renderer, x, y);
 			}
 		}
@@ -114,5 +112,3 @@ void WindowSDL::Kill()
 
 	SDL_Quit();
 }
-
-

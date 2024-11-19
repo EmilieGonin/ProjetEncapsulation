@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include "Sprite.h"
+#include <SDL_image.h>
 
 class SpriteSDL : public Sprite
 {

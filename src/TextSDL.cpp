@@ -15,7 +15,7 @@ bool TextSDL::LoadFont(const std::string& fontPath, int fontSize)
 {
     if (!m_font) 
     {
-        std::string fontPath = "C:/Users/aphilippe/Documents/GitHub/ProjetEncapsulation/resources/Roboto-Regular.ttf";  // Chemin relatif
+        std::string fontPath = "../../resources/Roboto-Regular.ttf";
         m_font = TTF_OpenFont(fontPath.c_str(), fontSize);
         if (!m_font) 
         {

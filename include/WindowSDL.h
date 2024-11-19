@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include "Window.h"
 #include "math.h"
+#include "TextSDL.h"
 
 class WindowSDL : public Window
 {
@@ -20,5 +21,6 @@ private:
 
 	SDL_Window* m_window = NULL;
 	SDL_Renderer* m_renderer = NULL;	
+	TextSDL* m_text;
 };
 

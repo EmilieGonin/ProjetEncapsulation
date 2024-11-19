@@ -38,12 +38,21 @@ int WindowSDL::CreateWindow()
 		return 1;
 	}
 
+	std::string fontPath = "../../resources/Roboto-Regular.ttf";
+	m_font = TTF_OpenFont(fontPath.c_str(), 20);
+	if (!m_font)
+	{
+		std::cout << "Error loading font: " << TTF_GetError() << std::endl;
+		return false;
+	}
+	if (TTF_Init() == -1) std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+
 	// Initialiser TextSDL
-	m_text = new TextSDL(m_renderer);
-	if (!m_text->LoadFont("font.ttf", 24)) return 1;
-	
+	m_fps = new TextSDL("", std::make_pair(10,10), { 0, 255, 0, 255 });
+
 	return 0;
 }
+
 
 bool WindowSDL::IsWindowCreated()
 {
@@ -61,13 +70,33 @@ void WindowSDL::Draw()
 	fps = 1000.0f / (currentTicks - lastTicks);
 	lastTicks = currentTicks;
 
+	m_fps->Update("FPS: " + std::to_string((int)fps));
+
 	// Nettoyer l'�cran
 	SDL_SetRenderDrawColor(m_renderer, 25, 25, 112, 255);
 	SDL_RenderClear(m_renderer);
 
-	// Exemple d'affichage texte avec FPS
-	SDL_Color color = { 0, 255, 0, 255 };
-	m_text->RenderText("FPS: " + std::to_string((int)fps), 10, 10, color);
+
+	SDL_Surface* surface = TTF_RenderText_Solid(m_font, m_fps->GetValue().c_str(), m_fps->GetColor());
+	if (!surface)
+	{
+		std::cout << "Error creating text surface: " << TTF_GetError() << std::endl;
+		return;
+	}
+
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+	if (!texture)
+	{
+		std::cout << "Error creating text texture: " << SDL_GetError() << std::endl;
+		SDL_FreeSurface(surface);
+		return;
+	}
+
+	SDL_Rect destRect = {m_fps->GetPos().first, m_fps->GetPos().second, surface->w, surface->h};
+	SDL_RenderCopy(m_renderer, texture, NULL, &destRect);
+
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
 
 	// Coordonn�es du centre du disque et son rayon
 	int centerX = 320;  // Par exemple, au centre de la fen�tre
@@ -103,11 +132,15 @@ void WindowSDL::Kill()
 	m_window = NULL;
 	m_renderer = NULL;
 
-	if (m_text) 
+	if (m_fps) 
 	{
-		m_text->Cleanup();
-		delete m_text;
-		m_text = nullptr;
+		if (m_font)
+		{
+			TTF_CloseFont(m_font);
+			m_font = nullptr;
+		}
+		delete m_fps;
+		m_fps = NULL;
 	}
 
 	SDL_Quit();

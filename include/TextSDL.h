@@ -1,19 +1,19 @@
 #pragma once
 #include "Text.h"
-#include <SDL.h>
-#include <SDL_ttf.h>
+#include <SDL_pixels.h>
 
 class TextSDL : public Text
 {
 public:
-    TextSDL(SDL_Renderer* renderer);
-    ~TextSDL();
+	TextSDL(std::string text, std::pair<int, int> pos, SDL_Color color);
+	std::string GetValue();
+	std::pair<int, int> GetPos();
+	SDL_Color GetColor();
 
-    bool LoadFont(const std::string& fontPath, int fontSize);
-    void RenderText(const std::string& text, int x, int y, SDL_Color color);
-    void Cleanup();
+	void Update(std::string);
 
 private:
-    SDL_Renderer* m_renderer;
-    TTF_Font* m_font;
+	std::string m_text;
+	std::pair<int, int> m_pos;
+	SDL_Color m_color;
 };

@@ -28,9 +28,6 @@ int WindowSDL::CreateWindow()
 		return 1;
 	}
 
-
-	Draw();
-
 	return 0;
 }
 
@@ -82,5 +79,3 @@ void WindowSDL::Kill()
 
 	SDL_Quit();
 }
-
-

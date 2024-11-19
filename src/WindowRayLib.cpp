@@ -9,8 +9,8 @@ int WindowRayLib::InitLib()
 
 int WindowRayLib::CreateWindow()
 {
-	InitWindow(1280, 800, "Hello Raylib");
-	m_sprites.push_back(new SpriteRayLib("wabbit_alpha.png"));
+	InitWindow(1280, 720, "Projet Encapsulation");
+	m_sprites.push_back(new SpriteRayLib("Pokeball.png"));
 	return 0;
 }
 

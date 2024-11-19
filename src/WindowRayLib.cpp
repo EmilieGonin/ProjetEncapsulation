@@ -9,8 +9,8 @@ int WindowRayLib::InitLib()
 
 int WindowRayLib::CreateWindow()
 {
-	InitWindow(1280, 800, "Hello Raylib");
-	m_sprites.push_back(new SpriteRayLib("wabbit_alpha.png"));
+	InitWindow(1280, 720, "Projet Encapsulation");
+	m_sprites.push_back(new SpriteRayLib("Pokeball.png", 400, 200));
 	return 0;
 }
 
@@ -27,7 +27,7 @@ void WindowRayLib::Draw()
 	for (auto sprite : m_sprites)
 	{
 		Texture2D texture = *reinterpret_cast<Texture2D*>(sprite->Get());
-		DrawTexture(texture, 400, 200, WHITE);
+		DrawTexture(texture, sprite->GetPos().first, sprite->GetPos().second, WHITE);
 	}
 
 	//DrawText("Hello Raylib", 200, 200, 20, WHITE);

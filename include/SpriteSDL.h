@@ -7,10 +7,10 @@ class SpriteSDL : public Sprite
 {
 public:
 
-	SpriteSDL(std::string path, SDL_Renderer* renderer);
+	SpriteSDL(std::string path, int x, int y, SDL_Renderer* renderer);
 
 	virtual void Load() override;
-	virtual void* Get() override;
+	virtual void* Get() override { return (void*)&m_texture; }
 
 private:
 

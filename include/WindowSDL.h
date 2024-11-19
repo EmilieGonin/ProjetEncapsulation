@@ -2,6 +2,7 @@
 #define SDL_MAIN_HANDLED
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include "Window.h"
 #include "math.h"
 #include "TextSDL.h"
@@ -22,5 +23,6 @@ private:
 
 	SDL_Window* m_window = NULL;
 	SDL_Renderer* m_renderer = NULL;	
-	TextSDL* m_text;
+	TTF_Font* m_font;
+	TextSDL* m_fps;
 };

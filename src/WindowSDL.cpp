@@ -108,29 +108,33 @@ void WindowSDL::Draw()
 
 	for (auto sprite : m_sprites)
 	{
-		SDL_Texture* texture = reinterpret_cast<SDL_Texture*>(sprite->Get());
-		SDL_RenderCopy(m_renderer, texture, NULL, NULL);
+		SDL_Rect destRect = { sprite->GetPos().first, sprite->GetPos().second, 100, 100 };
+
+		SDL_Texture* texture = *reinterpret_cast<SDL_Texture**>(sprite->Get());
+
+		SDL_RenderCopy(m_renderer, texture, NULL, &destRect);
+		SDL_Delay(16);
 	}
 
-	// Coordonn�es du centre du disque et son rayon
-	int centerX = 320;  // Par exemple, au centre de la fen�tre
-	int centerY = 240;
-	int radius = 50;   // Rayon du disque
+	//// Coordonn�es du centre du disque et son rayon
+	//int centerX = 320;  // Par exemple, au centre de la fen�tre
+	//int centerY = 240;
+	//int radius = 50;   // Rayon du disque
 
-	SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-	// Parcourir tous les pixels dans un carr� autour du cercle
-	for (int y = centerY - radius; y <= centerY + radius; y++) 
-	{
-		for (int x = centerX - radius; x <= centerX + radius; x++) 
-		{
-			// V�rifier si le pixel est � l'int�rieur du cercle
-			if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) 
-			{
-				// Dessiner le point � cette position
-				SDL_RenderDrawPoint(m_renderer, x, y);
-			}
-		}
-	}
+	//SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
+	//// Parcourir tous les pixels dans un carr� autour du cercle
+	//for (int y = centerY - radius; y <= centerY + radius; y++) 
+	//{
+	//	for (int x = centerX - radius; x <= centerX + radius; x++) 
+	//	{
+	//		// V�rifier si le pixel est � l'int�rieur du cercle
+	//		if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) 
+	//		{
+	//			// Dessiner le point � cette position
+	//			SDL_RenderDrawPoint(m_renderer, x, y);
+	//		}
+	//	}
+	//}
 
 	SDL_RenderPresent(m_renderer);
 }

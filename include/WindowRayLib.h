@@ -8,6 +8,7 @@
 class WindowRayLib : public Window
 {
 public:
+
 	virtual int InitLib() override;
 	virtual int CreateWindow() override;
 	virtual bool IsWindowCreated() override;

@@ -2,32 +2,46 @@
 
 int WindowSDL::InitLib()
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
+	{
 		std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
 		system("pause");
-		// End the program
 		return 1;
 	}
+
+	// Initialiser SDL_ttf
+	if (TTF_Init() == -1) 
+	{
+		std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+		system("pause");
+		return 1;
+	}
+
 	return 0;
 }
 
 int WindowSDL::CreateWindow()
 {
 	m_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
-	// Make sure creating the window succeeded
-	if (!m_window) {
+
+	if (!m_window) 
+	{
 		std::cout << "Error creating window: " << SDL_GetError() << std::endl;
 		system("pause");
-		// End the program
 		return 1;
 	}
 
 	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
-	if (!m_renderer) {
+	if (!m_renderer) 
+	{
 		std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;
 		return 1;
 	}
 
+	// Initialiser TextSDL
+	m_text = new TextSDL(m_renderer);
+	if (!m_text->LoadFont("font.ttf", 24)) return 1;
+	
 	return 0;
 }
 
@@ -38,26 +52,38 @@ bool WindowSDL::IsWindowCreated()
 
 void WindowSDL::Draw()
 {
-	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-	SDL_Rect r;
-	r.x = 150;
-	r.y = 25;
-	r.h = 75;
-	r.w = 120;
-	SDL_RenderFillRect(m_renderer, &r); // Draw a filled rectangle
+	Uint32 startTicks = SDL_GetTicks();
+	static Uint32 lastTicks = startTicks;
+	static float fps = 0.0f;
 
-	// Coordonnées du centre du disque et son rayon
-	int centerX = 320;  // Par exemple, au centre de la fenêtre
+	// Calcul FPS
+	Uint32 currentTicks = SDL_GetTicks();
+	fps = 1000.0f / (currentTicks - lastTicks);
+	lastTicks = currentTicks;
+
+	// Nettoyer l'ï¿½cran
+	SDL_SetRenderDrawColor(m_renderer, 25, 25, 112, 255);
+	SDL_RenderClear(m_renderer);
+
+	// Exemple d'affichage texte avec FPS
+	SDL_Color color = { 0, 255, 0, 255 };
+	m_text->RenderText("FPS: " + std::to_string((int)fps), 10, 10, color);
+
+	// Coordonnï¿½es du centre du disque et son rayon
+	int centerX = 320;  // Par exemple, au centre de la fenï¿½tre
 	int centerY = 240;
-	int radius = 100;   // Rayon du disque
+	int radius = 50;   // Rayon du disque
 
-	SDL_SetRenderDrawColor(m_renderer, 255, 0, 255, 255);
-	// Parcourir tous les pixels dans un carré autour du cercle
-	for (int y = centerY - radius; y <= centerY + radius; y++) {
-		for (int x = centerX - radius; x <= centerX + radius; x++) {
-			// Vérifier si le pixel est à l'intérieur du cercle
-			if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) {
-				// Dessiner le point à cette position
+	SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
+	// Parcourir tous les pixels dans un carrï¿½ autour du cercle
+	for (int y = centerY - radius; y <= centerY + radius; y++) 
+	{
+		for (int x = centerX - radius; x <= centerX + radius; x++) 
+		{
+			// Vï¿½rifier si le pixel est ï¿½ l'intï¿½rieur du cercle
+			if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) 
+			{
+				// Dessiner le point ï¿½ cette position
 				SDL_RenderDrawPoint(m_renderer, x, y);
 			}
 		}
@@ -76,6 +102,13 @@ void WindowSDL::Kill()
 	SDL_DestroyRenderer(m_renderer);
 	m_window = NULL;
 	m_renderer = NULL;
+
+	if (m_text) 
+	{
+		m_text->Cleanup();
+		delete m_text;
+		m_text = nullptr;
+	}
 
 	SDL_Quit();
 }

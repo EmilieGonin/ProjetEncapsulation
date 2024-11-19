@@ -1,60 +1,52 @@
 #include "TextSDL.h"
 
-TextSDL::TextSDL(SDL_Renderer* renderer) : m_renderer(renderer), m_font(nullptr) 
+//void TextSDL::RenderText(const std::string& text, int x, int y, SDL_Color color)
+//{
+//    SDL_Surface* surface = TTF_RenderText_Solid(m_font, text.c_str(), color);
+//    if (!surface) 
+//    {
+//        std::cout << "Error creating text surface: " << TTF_GetError() << std::endl;
+//        return;
+//    }
+//
+//    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+//    if (!texture) 
+//    {
+//        std::cout << "Error creating text texture: " << SDL_GetError() << std::endl;
+//        SDL_FreeSurface(surface);
+//        return;
+//    }
+//
+//    SDL_Rect destRect = { x, y, surface->w, surface->h };
+//    SDL_RenderCopy(m_renderer, texture, NULL, &destRect);
+//
+//    SDL_FreeSurface(surface);
+//    SDL_DestroyTexture(texture);
+//}
+
+TextSDL::TextSDL(std::string text, std::pair<int, int> pos, SDL_Color color)
 {
-    // Assurer que SDL_ttf est initialisé avant d'utiliser TTF_OpenFont
-    if (TTF_Init() == -1) std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+	m_text = text;
+	m_pos = pos;
+	m_color = color;
 }
 
-TextSDL::~TextSDL()
+std::string TextSDL::GetValue()
 {
-	Cleanup();
+	return m_text;
 }
 
-bool TextSDL::LoadFont(const std::string& fontPath, int fontSize)
+std::pair<int, int> TextSDL::GetPos()
 {
-    if (!m_font) 
-    {
-        std::string fontPath = "C:/Users/aphilippe/Documents/GitHub/ProjetEncapsulation/resources/Roboto-Regular.ttf";  // Chemin relatif
-        m_font = TTF_OpenFont(fontPath.c_str(), fontSize);
-        if (!m_font) 
-        {
-            std::cout << "Error loading font: " << TTF_GetError() << std::endl;
-            return false;
-        }
-    }
-    return true;
+	return m_pos;
 }
 
-void TextSDL::RenderText(const std::string& text, int x, int y, SDL_Color color)
+SDL_Color TextSDL::GetColor()
 {
-    SDL_Surface* surface = TTF_RenderText_Solid(m_font, text.c_str(), color);
-    if (!surface) 
-    {
-        std::cout << "Error creating text surface: " << TTF_GetError() << std::endl;
-        return;
-    }
-
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-    if (!texture) 
-    {
-        std::cout << "Error creating text texture: " << SDL_GetError() << std::endl;
-        SDL_FreeSurface(surface);
-        return;
-    }
-
-    SDL_Rect destRect = { x, y, surface->w, surface->h };
-    SDL_RenderCopy(m_renderer, texture, NULL, &destRect);
-
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
+	return m_color;
 }
 
-void TextSDL::Cleanup()
+void TextSDL::Update(std::string text)
 {
-    if (m_font) 
-    {
-        TTF_CloseFont(m_font);
-        m_font = nullptr;
-    }
+	m_text = text;
 }

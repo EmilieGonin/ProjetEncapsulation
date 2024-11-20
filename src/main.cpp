@@ -7,15 +7,26 @@ std::vector<Sprite*> m_sprites;
 
 int main(int argc, char** args)
 {
-	std::srand(std::time(nullptr));
+    std::srand(std::time(nullptr));
+    Window* win = nullptr;
 
-	//Window* win = new WindowSDL();
-	Window* win = new WindowRayLib();
+    if (argc > 1) 
+    {
+        std::string arg = args[1];
 
-	if (win->InitLib()) return 1;
-	if (win->CreateWindow()) return 1;
+        if (arg == "--raylib") win = new WindowRayLib();    // Utilisation de Raylib
+        else if (arg == "--sdl") win = new WindowSDL();     // Utilisation de SDL
+    }
+    else 
+    {
+        win = new WindowSDL();
+        //win = new WindowRayLib();
+    }
 
-	for (size_t i = 0; i < 5; i++)
+    if (win->InitLib()) return 1;
+    if (win->CreateWindow()) return 1;
+
+    for (size_t i = 0; i < 5; i++)
 	{
 		Ball* ball = win->CreatePlayer();
 		m_balls.push_back(ball);
@@ -34,6 +45,8 @@ int main(int argc, char** args)
 		win->Draw(m_sprites);
 	}
 
-	win->Kill();
-	return 0;
+    win->Kill();
+    delete win;
+
+    return 0;
 }

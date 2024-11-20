@@ -4,17 +4,42 @@
 
 int main(int argc, char** args)
 {
-	Window* win = new WindowSDL();
+	//Window* win = new WindowSDL();
 	//Window* win = new WindowRayLib();
 
-	if (win->InitLib()) return 1;
-	if (win->CreateWindow()) return 1;
+    Window* win = nullptr;
 
-	while (win->IsWindowCreated())
-	{
-		win->Draw();
-	}
+    if (argc > 1) {
+        std::string arg = args[1];
 
-	win->Kill();
-	return 0;
+        if (arg == "--raylib") {
+            win = new WindowRayLib();  // Utilisation de Raylib
+        }
+        else if (arg == "--sdl") {
+            win = new WindowSDL();     // Utilisation de SDL
+        }
+        else {
+            std::cerr << "Argument inconnu : " << arg << std::endl;
+            std::cerr << "Utilisez --raylib ou --sdl" << std::endl;
+            return 1;
+        }
+    }
+    else {
+        std::cerr << "Aucun argument fourni. Utilisez --raylib ou --sdl" << std::endl;
+        return 1;
+    }
+
+    if (win->InitLib()) return 1;
+    if (win->CreateWindow()) return 1;
+
+    // Boucle principale
+    while (win->IsWindowCreated()) 
+    {
+        win->Draw();
+    }
+
+    win->Kill();
+    delete win;
+
+    return 0;
 }

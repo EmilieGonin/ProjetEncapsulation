@@ -104,11 +104,18 @@ int WindowSDL::CreateWindow()
 
 bool WindowSDL::IsWindowCreated()
 {
-    return m_window != nullptr;
+    return true;
 }
 
 void WindowSDL::Draw()
 {
+    SDL_Event event;
+    SDL_PollEvent(&event);
+    if (event.type == SDL_QUIT)
+    {
+        Kill();
+    }
+
     Uint32 startTicks = SDL_GetTicks();
 
     // FPS Calculation
@@ -154,21 +161,18 @@ void WindowSDL::Clear()
 
 void WindowSDL::Kill()
 {
-    // Libération des textures du cache
     for (auto& [key, texture] : m_textureCache)
     {
         SDL_DestroyTexture(texture);
     }
     m_textureCache.clear();
 
-    // Libération des sprites
     for (auto sprite : m_sprites)
     {
         delete sprite;
     }
     m_sprites.clear();
 
-    // Fermeture de la police et suppression de m_fps
     if (m_fps)
     {
         if (m_font)
@@ -180,7 +184,6 @@ void WindowSDL::Kill()
         m_fps = nullptr;
     }
 
-    // Suppression du renderer et de la fenêtre
     if (m_renderer)
     {
         SDL_DestroyRenderer(m_renderer);

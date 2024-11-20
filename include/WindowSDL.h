@@ -17,7 +17,9 @@ public:
     virtual int InitLib() override;
     virtual int CreateWindow() override;
     virtual bool IsWindowCreated() override;
-    virtual void Draw() override;
+    virtual Player* CreatePlayer() override;
+    virtual Brick* CreateBrick(int x, int y) override;
+    virtual void Draw(std::vector<Sprite*> sprites) override;
     virtual void Clear() override;
     virtual void Kill() override;
 

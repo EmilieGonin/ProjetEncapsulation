@@ -10,7 +10,6 @@ int WindowRayLib::InitLib()
 int WindowRayLib::CreateWindow()
 {
 	InitWindow(W_WINDOW, H_WINDOW, "Projet Encapsulation");
-	m_sprites.push_back(new SpriteRayLib("Pokeball.png", 400, 200));
 	return 0;
 }
 
@@ -19,13 +18,23 @@ bool WindowRayLib::IsWindowCreated()
 	return !WindowShouldClose();
 }
 
-void WindowRayLib::Draw()
+Player* WindowRayLib::CreatePlayer()
+{
+	return new Player(new SpriteRayLib("Pokeball.png", 400, 200));
+}
+
+Brick* WindowRayLib::CreateBrick(int x, int y)
+{
+	return new Brick(new SpriteRayLib("Pokeball.png", 400, 200), x, y);
+}
+
+void WindowRayLib::Draw(std::vector<Sprite*> sprites)
 {
 	BeginDrawing();
 	Color background = { 25, 25, 112, 255 };
 	ClearBackground(background);
 
-	for (auto sprite : m_sprites)
+	for (auto sprite : sprites)
 	{
 		Texture2D texture = *reinterpret_cast<Texture2D*>(sprite->Get());
 		DrawTexture(texture, sprite->GetPos().first, sprite->GetPos().second, WHITE);
@@ -38,11 +47,11 @@ void WindowRayLib::Draw()
 
 void WindowRayLib::Clear()
 {
-	for (auto sprite : m_sprites)
+	/*for (auto sprite : m_sprites)
 	{
 		Texture2D texture = *reinterpret_cast<Texture2D*>(sprite->Get());
 		UnloadTexture(texture);
-	}
+	}*/
 }
 
 void WindowRayLib::Kill()

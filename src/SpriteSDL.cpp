@@ -13,3 +13,13 @@ SpriteSDL::SpriteSDL(std::string path, int x, int y, SDL_Renderer* renderer)
 	SDL_FreeSurface(buffer);
 	buffer = NULL;
 }
+
+int SpriteSDL::GetWidth()
+{
+	return 0;
+}
+
+int SpriteSDL::GetHeight()
+{
+	return 0;
+}

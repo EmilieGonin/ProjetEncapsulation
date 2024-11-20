@@ -269,6 +269,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\Brick.h" />
+    <ClInclude Include="..\..\include\Entity.h" />
+    <ClInclude Include="..\..\include\GameManager.h" />
+    <ClInclude Include="..\..\include\Player.h" />
     <ClInclude Include="..\..\include\PlayerInput.h" />
     <ClInclude Include="..\..\include\PlayerInputRayLib.h" />
     <ClInclude Include="..\..\include\PlayerInputSDL.h" />
@@ -284,7 +288,11 @@
     <ClInclude Include="..\..\include\WindowSDL.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Brick.cpp" />
+    <ClCompile Include="..\..\src\Entity.cpp" />
+    <ClCompile Include="..\..\src\GameManager.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\PlayerInput.cpp" />
     <ClCompile Include="..\..\src\PlayerInputRayLib.cpp" />
     <ClCompile Include="..\..\src\PlayerInputSDL.cpp" />

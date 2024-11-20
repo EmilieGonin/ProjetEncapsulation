@@ -96,9 +96,6 @@ int WindowSDL::CreateWindow()
 
     m_fps = new TextSDL("", { 10, 10 }, { 0, 255, 0, 255 });
 
-    std::string spritePath = GetResourcePath("Pokeball.png");
-    m_sprites.push_back(new SpriteSDL(spritePath, 400, 200, m_renderer));
-
     return 0;
 }
 
@@ -107,7 +104,19 @@ bool WindowSDL::IsWindowCreated()
     return m_window != nullptr;
 }
 
-void WindowSDL::Draw()
+Player* WindowSDL::CreatePlayer()
+{
+    std::string path = GetResourcePath("Pokeball.png");
+    return new Player(new SpriteSDL(path, 400, 200, m_renderer));
+}
+
+Brick* WindowSDL::CreateBrick(int x, int y)
+{
+    std::string path = GetResourcePath("Pokeball.png");
+    return new Brick(new SpriteSDL("Pokeball.png", 400, 200, m_renderer), x, y);
+}
+
+void WindowSDL::Draw(std::vector<Sprite*> sprites)
 {
     Uint32 startTicks = SDL_GetTicks();
 
@@ -136,7 +145,7 @@ void WindowSDL::Draw()
     }
 
     // Render sprites
-    for (auto sprite : m_sprites)
+    for (auto sprite : sprites)
     {
         SDL_Texture* texture = *reinterpret_cast<SDL_Texture**>(sprite->Get());
         SDL_Rect destRect = { sprite->GetPos().first, sprite->GetPos().second, 100, 100 };
@@ -162,11 +171,11 @@ void WindowSDL::Kill()
     m_textureCache.clear();
 
     // Libération des sprites
-    for (auto sprite : m_sprites)
+    /*for (auto sprite : m_sprites)
     {
         delete sprite;
     }
-    m_sprites.clear();
+    m_sprites.clear();*/
 
     // Fermeture de la police et suppression de m_fps
     if (m_fps)

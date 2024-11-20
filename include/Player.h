@@ -2,11 +2,11 @@
 
 #include "Entity.h"
 
-class Player : public Entity
+class Ball : public Entity
 {
 public:
 
-	Player(Sprite* sprite);
+	Ball(Sprite* sprite);
 
 	virtual void UpdatePos(int screenWidth, int screenHeight);
 

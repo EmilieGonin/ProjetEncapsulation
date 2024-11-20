@@ -26,7 +26,7 @@ int main(int argc, char** args)
     if (win->InitLib()) return 1;
     if (win->CreateWindow()) return 1;
 
-    for (size_t i = 0; i < 50; i++)
+    for (size_t i = 0; i < 5; i++)
 	{
 		Ball* ball = win->CreatePlayer();
 		m_balls.push_back(ball);

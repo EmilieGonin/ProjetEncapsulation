@@ -16,7 +16,7 @@ int main(int argc, char** args)
 	m_player = win->CreatePlayer();
 
 	m_sprites.push_back(m_player->GetSprite());
-	m_sprites.push_back(win->CreateBrick(1,1)->GetSprite()); //boucle for
+	//m_sprites.push_back(win->CreateBrick(1,1)->GetSprite()); //boucle for
 
 	while (win->IsWindowCreated())
 	{

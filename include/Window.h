@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "Player.h"
+#include "Ball.h"
 #include "Brick.h"
 
 #define W_WINDOW 500

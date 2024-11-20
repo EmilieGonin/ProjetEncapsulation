@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Ball.h"
 
 Ball::Ball(Sprite* sprite)
 {

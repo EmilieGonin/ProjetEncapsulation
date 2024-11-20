@@ -12,7 +12,7 @@ public:
 	virtual int InitLib() override;
 	virtual int CreateWindow() override;
 	virtual bool IsWindowCreated() override;
-	virtual Player* CreatePlayer() override;
+	virtual Ball* CreatePlayer() override;
 	virtual Brick* CreateBrick(int x, int y) override;
 	virtual void Draw(std::vector<Sprite*> sprites) override;
 	virtual void Clear() override;

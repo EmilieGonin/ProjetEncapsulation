@@ -1,13 +1,13 @@
-#include "Player.h"
+#include "Ball.h"
 
-Player::Player(Sprite* sprite)
+Ball::Ball(Sprite* sprite)
 {
 	m_sprite = sprite;
-	m_sprite->SetPos(1, 1);
+	m_sprite->SetPos(200, 200);
 	m_direction = GetRandomDirection();
 }
 
-void Player::UpdatePos(int screenWidth, int screenHeight)
+void Ball::UpdatePos(int screenWidth, int screenHeight)
 {
 	int x = m_sprite->GetPos().first;
 	int y = m_sprite->GetPos().second;
@@ -28,8 +28,7 @@ void Player::UpdatePos(int screenWidth, int screenHeight)
 	m_sprite->SetPos(x, y);
 }
 
-std::pair<int, int> Player::GetRandomDirection()
+std::pair<int, int> Ball::GetRandomDirection()
 {
-	std::srand(std::time(nullptr));
 	return std::make_pair(std::rand() % 5 + 1, std::rand() % 5 + 1);
 }

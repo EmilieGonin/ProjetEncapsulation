@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Text.h"
 #include "Ball.h"
 #include "Brick.h"
 
@@ -21,4 +22,8 @@ public:
 	virtual void Draw(std::vector<Sprite*> sprites) = 0;
 	virtual void Clear() = 0;
 	virtual void Kill() = 0;
+
+protected:
+
+	Text* m_fps = nullptr;
 };

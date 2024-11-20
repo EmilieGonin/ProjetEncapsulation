@@ -138,7 +138,9 @@ void WindowSDL::Draw(std::vector<Sprite*> sprites)
     SDL_RenderClear(m_renderer);
 
     // Render FPS text
-    SDL_Surface* surface = TTF_RenderText_Solid(m_font, m_fps->GetValue().c_str(), m_fps->GetColor());
+    SDL_Surface* surface = TTF_RenderText_Solid(
+        m_font, m_fps->GetValue().c_str(), { 0, 255, 0, 255 }
+    );
     if (surface)
     {
         SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);

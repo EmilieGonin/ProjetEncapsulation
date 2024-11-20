@@ -2,7 +2,7 @@
 
 int WindowRayLib::InitLib()
 {
-	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+	SetTargetFPS(60);
 	SearchAndSetResourceDir("resources");
 	return 0;
 }
@@ -10,6 +10,9 @@ int WindowRayLib::InitLib()
 int WindowRayLib::CreateWindow()
 {
 	InitWindow(W_WINDOW, H_WINDOW, "Projet Encapsulation");
+	m_font = LoadFont("Roboto-Regular.ttf");
+	SetTextureFilter(m_font.texture, TEXTURE_FILTER_POINT);
+	m_fps = new TextRayLib("", { 10, 10 });
 	return 0;
 }
 
@@ -30,6 +33,8 @@ Brick* WindowRayLib::CreateBrick(int x, int y)
 
 void WindowRayLib::Draw(std::vector<Sprite*> sprites)
 {
+	m_fps->Update(TextFormat("FPS: %i", GetFPS()));
+
 	BeginDrawing();
 	Color background = { 25, 25, 112, 255 };
 	ClearBackground(background);
@@ -40,7 +45,9 @@ void WindowRayLib::Draw(std::vector<Sprite*> sprites)
 		DrawTexture(texture, sprite->GetPos().first, sprite->GetPos().second, WHITE);
 	}
 
-	//DrawText("Hello Raylib", 200, 200, 20, WHITE);
+	DrawTextEx(m_font, m_fps->GetValue().c_str(),
+		{ (float)m_fps->GetPos().first, (float)m_fps->GetPos().second },
+		22, 1, { 0, 255, 0, 255 });
 
 	EndDrawing();
 }

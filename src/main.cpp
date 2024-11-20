@@ -19,14 +19,14 @@ int main(int argc, char** args)
     }
     else 
     {
-        win = new WindowSDL();
-        //win = new WindowRayLib();
+        //win = new WindowSDL();
+        win = new WindowRayLib();
     }
 
     if (win->InitLib()) return 1;
     if (win->CreateWindow()) return 1;
 
-    for (size_t i = 0; i < 5; i++)
+    for (size_t i = 0; i < 50; i++)
 	{
 		Ball* ball = win->CreatePlayer();
 		m_balls.push_back(ball);

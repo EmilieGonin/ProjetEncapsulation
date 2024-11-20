@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "resource_dir.h"
 #include "SpriteRayLib.h"
+#include "TextRayLib.h"
 
 class WindowRayLib : public Window
 {
@@ -17,4 +18,7 @@ public:
 	virtual void Draw(std::vector<Sprite*> sprites) override;
 	virtual void Clear() override;
 	virtual void Kill() override;
+
+private:
+	Font m_font;
 };

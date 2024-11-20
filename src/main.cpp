@@ -4,9 +4,6 @@
 
 int main(int argc, char** args)
 {
-	//Window* win = new WindowSDL();
-	//Window* win = new WindowRayLib();
-
     Window* win = nullptr;
 
     if (argc > 1) {
@@ -25,8 +22,8 @@ int main(int argc, char** args)
         }
     }
     else {
-        std::cerr << "Aucun argument fourni. Utilisez --raylib ou --sdl" << std::endl;
-        return 1;
+        win = new WindowSDL();
+        //win = new WindowRayLib();
     }
 
     if (win->InitLib()) return 1;

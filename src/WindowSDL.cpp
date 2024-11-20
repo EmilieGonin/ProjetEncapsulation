@@ -67,7 +67,7 @@ int WindowSDL::InitLib()
 
 int WindowSDL::CreateWindow()
 {
-    m_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W_WINDOW, H_WINDOW, SDL_WINDOW_SHOWN);
+    m_window = SDL_CreateWindow("Projet Encapsulation", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W_WINDOW, H_WINDOW, SDL_WINDOW_SHOWN);
     
     if (!m_window)
     {

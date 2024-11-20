@@ -63,5 +63,6 @@ void WindowRayLib::Clear()
 
 void WindowRayLib::Kill()
 {
+	//unload font
 	CloseWindow();
 }

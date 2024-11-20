@@ -155,7 +155,10 @@ void WindowSDL::Draw(std::vector<Sprite*> sprites)
     for (auto sprite : sprites)
     {
         SDL_Texture* texture = *reinterpret_cast<SDL_Texture**>(sprite->Get());
-        SDL_Rect destRect = { sprite->GetPos().first, sprite->GetPos().second, 100, 100 };
+        SDL_Rect destRect = {
+            sprite->GetPos().first, sprite->GetPos().second,
+            sprite->GetWidth(), sprite->GetHeight()
+        };
         SDL_RenderCopy(m_renderer, texture, nullptr, &destRect);
     }
 

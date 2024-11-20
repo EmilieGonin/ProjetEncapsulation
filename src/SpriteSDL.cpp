@@ -11,14 +11,8 @@ SpriteSDL::SpriteSDL(std::string path, SDL_Renderer* renderer)
 	m_texture = SDL_CreateTextureFromSurface(renderer, buffer);
 	SDL_FreeSurface(buffer);
 	buffer = NULL;
-}
 
-int SpriteSDL::GetWidth()
-{
-	return 0;
-}
-
-int SpriteSDL::GetHeight()
-{
-	return 0;
+	int width, height;
+	SDL_QueryTexture(m_texture, nullptr, nullptr, &width, &height);
+	m_size = std::make_pair(width, height);
 }

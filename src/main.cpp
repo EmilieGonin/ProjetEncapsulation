@@ -10,22 +10,15 @@ int main(int argc, char** args)
     std::srand(std::time(nullptr));
     Window* win = nullptr;
 
-    if (argc > 1) {
+    if (argc > 1) 
+    {
         std::string arg = args[1];
 
-        if (arg == "--raylib") {
-            win = new WindowRayLib();  // Utilisation de Raylib
-        }
-        else if (arg == "--sdl") {
-            win = new WindowSDL();     // Utilisation de SDL
-        }
-        else {
-            std::cerr << "Argument inconnu : " << arg << std::endl;
-            std::cerr << "Utilisez --raylib ou --sdl" << std::endl;
-            return 1;
-        }
+        if (arg == "--raylib") win = new WindowRayLib();    // Utilisation de Raylib
+        else if (arg == "--sdl") win = new WindowSDL();     // Utilisation de SDL
     }
-    else {
+    else 
+    {
         win = new WindowSDL();
         //win = new WindowRayLib();
     }

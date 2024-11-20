@@ -4,4 +4,3 @@
 class PlayerInputSDL : public PlayerInput
 {
 };
-

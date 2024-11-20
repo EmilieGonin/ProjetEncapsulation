@@ -32,7 +32,6 @@ private:
     SDL_Window* m_window = nullptr;
     SDL_Renderer* m_renderer = nullptr;
     TTF_Font* m_font = nullptr;
-    TextSDL* m_fps = nullptr;
     Uint32 m_lastFrameTime = 0;
 
     // Cache des textures pour éviter de les recharger plusieurs fois

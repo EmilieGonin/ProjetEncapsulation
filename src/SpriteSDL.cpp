@@ -1,10 +1,9 @@
 #include "SpriteSDL.h"
 
-SpriteSDL::SpriteSDL(std::string path, int x, int y, SDL_Renderer* renderer)
+SpriteSDL::SpriteSDL(std::string path, SDL_Renderer* renderer)
 	: m_renderer(renderer)
 {
 	m_path = path;
-	m_pos = std::make_pair(x, y);
 
 	SDL_Surface* buffer = IMG_Load(path.c_str());
 	if (!buffer) return;
@@ -12,14 +11,8 @@ SpriteSDL::SpriteSDL(std::string path, int x, int y, SDL_Renderer* renderer)
 	m_texture = SDL_CreateTextureFromSurface(renderer, buffer);
 	SDL_FreeSurface(buffer);
 	buffer = NULL;
-}
 
-int SpriteSDL::GetWidth()
-{
-	return 0;
-}
-
-int SpriteSDL::GetHeight()
-{
-	return 0;
+	int width, height;
+	SDL_QueryTexture(m_texture, nullptr, nullptr, &width, &height);
+	m_size = std::make_pair(width, height);
 }

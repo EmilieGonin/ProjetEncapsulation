@@ -107,13 +107,13 @@ bool WindowSDL::IsWindowCreated()
 Ball* WindowSDL::CreatePlayer()
 {
     std::string path = GetResourcePath("Pokeball.png");
-    return new Ball(new SpriteSDL(path, 400, 200, m_renderer));
+    return new Ball(new SpriteSDL(path, m_renderer));
 }
 
 Brick* WindowSDL::CreateBrick(int x, int y)
 {
     std::string path = GetResourcePath("Pokeball.png");
-    return new Brick(new SpriteSDL(path, 400, 200, m_renderer), x, y);
+    return new Brick(new SpriteSDL(path, m_renderer), x, y);
 }
 
 void WindowSDL::Draw(std::vector<Sprite*> sprites)
@@ -138,7 +138,9 @@ void WindowSDL::Draw(std::vector<Sprite*> sprites)
     SDL_RenderClear(m_renderer);
 
     // Render FPS text
-    SDL_Surface* surface = TTF_RenderText_Solid(m_font, m_fps->GetValue().c_str(), m_fps->GetColor());
+    SDL_Surface* surface = TTF_RenderText_Solid(
+        m_font, m_fps->GetValue().c_str(), { 0, 255, 0, 255 }
+    );
     if (surface)
     {
         SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
@@ -155,7 +157,10 @@ void WindowSDL::Draw(std::vector<Sprite*> sprites)
     for (auto sprite : sprites)
     {
         SDL_Texture* texture = *reinterpret_cast<SDL_Texture**>(sprite->Get());
-        SDL_Rect destRect = { sprite->GetPos().first, sprite->GetPos().second, 100, 100 };
+        SDL_Rect destRect = {
+            sprite->GetPos().first, sprite->GetPos().second,
+            sprite->GetWidth(), sprite->GetHeight()
+        };
         SDL_RenderCopy(m_renderer, texture, nullptr, &destRect);
     }
 

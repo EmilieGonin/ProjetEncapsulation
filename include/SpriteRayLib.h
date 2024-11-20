@@ -7,11 +7,11 @@ class SpriteRayLib : public Sprite
 {
 public:
 
-	SpriteRayLib(std::string path, int x, int y);
+	SpriteRayLib(std::string path);
 
 	virtual void* Get() override { return (void*)&m_texture; }
-	virtual int GetWidth() override;
-	virtual int GetHeight() override;
+	virtual int GetWidth() override { return m_texture.width; }
+	virtual int GetHeight() override { return m_texture.height; }
 
 private:
 

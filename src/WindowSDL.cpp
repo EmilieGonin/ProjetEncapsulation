@@ -107,13 +107,13 @@ bool WindowSDL::IsWindowCreated()
 Ball* WindowSDL::CreatePlayer()
 {
     std::string path = GetResourcePath("Pokeball.png");
-    return new Ball(new SpriteSDL(path, 400, 200, m_renderer));
+    return new Ball(new SpriteSDL(path, m_renderer));
 }
 
 Brick* WindowSDL::CreateBrick(int x, int y)
 {
     std::string path = GetResourcePath("Pokeball.png");
-    return new Brick(new SpriteSDL(path, 400, 200, m_renderer), x, y);
+    return new Brick(new SpriteSDL(path, m_renderer), x, y);
 }
 
 void WindowSDL::Draw(std::vector<Sprite*> sprites)

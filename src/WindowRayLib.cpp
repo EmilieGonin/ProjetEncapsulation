@@ -20,12 +20,12 @@ bool WindowRayLib::IsWindowCreated()
 
 Ball* WindowRayLib::CreatePlayer()
 {
-	return new Ball(new SpriteRayLib("Pokeball.png", 400, 200));
+	return new Ball(new SpriteRayLib("Pokeball.png"));
 }
 
 Brick* WindowRayLib::CreateBrick(int x, int y)
 {
-	return new Brick(new SpriteRayLib("Pokeball.png", 400, 200), x, y);
+	return new Brick(new SpriteRayLib("Pokeball.png"), x, y);
 }
 
 void WindowRayLib::Draw(std::vector<Sprite*> sprites)

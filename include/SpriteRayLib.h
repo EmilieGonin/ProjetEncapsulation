@@ -7,7 +7,7 @@ class SpriteRayLib : public Sprite
 {
 public:
 
-	SpriteRayLib(std::string path, int x, int y);
+	SpriteRayLib(std::string path);
 
 	virtual void* Get() override { return (void*)&m_texture; }
 	virtual int GetWidth() override;

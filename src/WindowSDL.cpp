@@ -113,7 +113,7 @@ Player* WindowSDL::CreatePlayer()
 Brick* WindowSDL::CreateBrick(int x, int y)
 {
     std::string path = GetResourcePath("Pokeball.png");
-    return new Brick(new SpriteSDL("Pokeball.png", 400, 200, m_renderer), x, y);
+    return new Brick(new SpriteSDL(path, 400, 200, m_renderer), x, y);
 }
 
 void WindowSDL::Draw(std::vector<Sprite*> sprites)

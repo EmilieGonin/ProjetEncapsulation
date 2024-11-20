@@ -7,8 +7,8 @@ std::vector<Sprite*> m_sprites;
 
 int main(int argc, char** args)
 {
-	//Window* win = new WindowSDL();
-	Window* win = new WindowRayLib();
+	Window* win = new WindowSDL();
+	//Window* win = new WindowRayLib();
 
 	if (win->InitLib()) return 1;
 	if (win->CreateWindow()) return 1;

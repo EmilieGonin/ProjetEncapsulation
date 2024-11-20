@@ -1,8 +1,3 @@
-#define SDL_MAIN_HANDLED
-
-#include <iostream>
-#include <SDL.h>
-
 #include "Window.h"
 #include "WindowSDL.h"
 #include "WindowRayLib.h"
@@ -14,8 +9,6 @@ int main(int argc, char** args)
 
 	if (win->InitLib()) return 1;
 	if (win->CreateWindow()) return 1;
-
-	//system("pause");
 
 	while (win->IsWindowCreated())
 	{

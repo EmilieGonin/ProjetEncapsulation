@@ -30,10 +30,7 @@ SDL_Texture* WindowSDL::LoadTexture(const std::string& path)
 void WindowSDL::CapFrameRate(int targetFPS)
 {
     Uint32 frameTicks = SDL_GetTicks() - m_lastFrameTime;
-    if (frameTicks < 1000 / targetFPS)
-    {
-        SDL_Delay(1000 / targetFPS - frameTicks);
-    }
+    if (frameTicks < 1000 / targetFPS) SDL_Delay(1000 / targetFPS - frameTicks);
     m_lastFrameTime = SDL_GetTicks();
 }
 
@@ -71,6 +68,7 @@ int WindowSDL::InitLib()
 int WindowSDL::CreateWindow()
 {
     m_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W_WINDOW, H_WINDOW, SDL_WINDOW_SHOWN);
+    
     if (!m_window)
     {
         std::cout << "Error creating window: " << SDL_GetError() << std::endl;
@@ -78,6 +76,7 @@ int WindowSDL::CreateWindow()
     }
 
     m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+
     if (!m_renderer)
     {
         std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;
@@ -86,11 +85,14 @@ int WindowSDL::CreateWindow()
 
     std::string fontPath = GetResourcePath("Roboto-Regular.ttf");
     m_font = TTF_OpenFont(fontPath.c_str(), 20);
+
     if (!m_font)
     {
         std::cout << "Error loading font: " << TTF_GetError() << std::endl;
         return 1;
     }
+
+    // Init elements
 
     m_fps = new TextSDL("", { 10, 10 }, { 0, 255, 0, 255 });
 

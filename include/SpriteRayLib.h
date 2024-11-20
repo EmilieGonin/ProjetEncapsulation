@@ -9,7 +9,6 @@ public:
 
 	SpriteRayLib(std::string path, int x, int y);
 
-	virtual void Load() override;
 	virtual void* Get() override { return (void*)&m_texture; }
 
 private:

@@ -22,7 +22,8 @@ bool WindowRayLib::IsWindowCreated()
 void WindowRayLib::Draw()
 {
 	BeginDrawing();
-	ClearBackground(BLACK);
+	Color background = { 25, 25, 112, 255 };
+	ClearBackground(background);
 
 	for (auto sprite : m_sprites)
 	{

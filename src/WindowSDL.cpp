@@ -1,166 +1,198 @@
 #include "WindowSDL.h"
 
+SDL_Texture* WindowSDL::LoadTexture(const std::string& path)
+{
+    if (m_textureCache.find(path) != m_textureCache.end())
+    {
+        return m_textureCache[path];
+    }
+
+    SDL_Surface* surface = IMG_Load(path.c_str());
+    if (!surface)
+    {
+        std::cout << "Error loading image: " << path << " - " << IMG_GetError() << std::endl;
+        return nullptr;
+    }
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+    SDL_FreeSurface(surface);
+
+    if (!texture)
+    {
+        std::cout << "Error creating texture from " << path << ": " << SDL_GetError() << std::endl;
+        return nullptr;
+    }
+
+    m_textureCache[path] = texture;
+    return texture;
+}
+
+void WindowSDL::CapFrameRate(int targetFPS)
+{
+    Uint32 frameTicks = SDL_GetTicks() - m_lastFrameTime;
+    if (frameTicks < 1000 / targetFPS)
+    {
+        SDL_Delay(1000 / targetFPS - frameTicks);
+    }
+    m_lastFrameTime = SDL_GetTicks();
+}
+
+std::string WindowSDL::GetResourcePath(const std::string& filename)
+{
+    return "../../resources/" + filename;
+}
+
 int WindowSDL::InitLib()
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
-	{
-		std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
-		system("pause");
-		return 1;
-	}
+    // Init SDL
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    {
+        std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
+        return 1;
+    }
 
-	// Initialiser SDL_ttf
-	if (TTF_Init() == -1) 
-	{
-		std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
-		system("pause");
-		return 1;
-	}
+    // Init SDL_ttf (Font)
+    if (TTF_Init() == -1)
+    {
+        std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+        return 1;
+    }
 
-	// Initialize SDL_image with PNG loading subsystem
-	if (IMG_Init(IMG_INIT_PNG) < 0) {
-		std::cout << "Error initializing SDL_image: " << IMG_GetError() << std::endl;
-		system("pause");
-		return 1;
-	}
+    // Init SDL_Image
+    if (IMG_Init(IMG_INIT_PNG) < 0)
+    {
+        std::cout << "Error initializing SDL_image: " << IMG_GetError() << std::endl;
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }
 
 int WindowSDL::CreateWindow()
 {
-	m_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+    m_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+    if (!m_window)
+    {
+        std::cout << "Error creating window: " << SDL_GetError() << std::endl;
+        return 1;
+    }
 
-	if (!m_window) 
-	{
-		std::cout << "Error creating window: " << SDL_GetError() << std::endl;
-		system("pause");
-		return 1;
-	}
+    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+    if (!m_renderer)
+    {
+        std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;
+        return 1;
+    }
 
-	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
-	if (!m_renderer) 
-	{
-		std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;
-		return 1;
-	}
+    std::string fontPath = GetResourcePath("Roboto-Regular.ttf");
+    m_font = TTF_OpenFont(fontPath.c_str(), 20);
+    if (!m_font)
+    {
+        std::cout << "Error loading font: " << TTF_GetError() << std::endl;
+        return 1;
+    }
 
-	std::string fontPath = "../../resources/Roboto-Regular.ttf";
-	m_font = TTF_OpenFont(fontPath.c_str(), 20);
-	if (!m_font)
-	{
-		std::cout << "Error loading font: " << TTF_GetError() << std::endl;
-		return false;
-	}
+    m_fps = new TextSDL("", { 10, 10 }, { 0, 255, 0, 255 });
 
-	// Initialiser TextSDL
-	m_fps = new TextSDL("", std::make_pair(10,10), { 0, 255, 0, 255 });
+    std::string spritePath = GetResourcePath("Pokeball.png");
+    m_sprites.push_back(new SpriteSDL(spritePath, 400, 200, m_renderer));
 
-	m_sprites.push_back(new SpriteSDL("../../resources/Pokeball.png", 400, 200, m_renderer));
-
-	return 0;
+    return 0;
 }
-
 
 bool WindowSDL::IsWindowCreated()
 {
-	return m_window;
+    return m_window != nullptr;
 }
 
 void WindowSDL::Draw()
 {
-	Uint32 startTicks = SDL_GetTicks();
-	static Uint32 lastTicks = startTicks;
-	static float fps = 0.0f;
+    Uint32 startTicks = SDL_GetTicks();
 
-	// Calcul FPS
-	Uint32 currentTicks = SDL_GetTicks();
-	fps = 1000.0f / (currentTicks - lastTicks);
-	lastTicks = currentTicks;
+    // FPS Calculation
+    static Uint32 lastTicks = startTicks;
+    float fps = 1000.0f / (startTicks - lastTicks);
+    lastTicks = startTicks;
 
-	m_fps->Update("FPS: " + std::to_string((int)fps));
+    m_fps->Update("FPS: " + std::to_string(static_cast<int>(fps)));
 
-	// Nettoyer l'�cran
-	SDL_SetRenderDrawColor(m_renderer, 25, 25, 112, 255);
-	SDL_RenderClear(m_renderer);
+    SDL_SetRenderDrawColor(m_renderer, 25, 25, 112, 255); // Background color
+    SDL_RenderClear(m_renderer);
 
+    // Render FPS text
+    SDL_Surface* surface = TTF_RenderText_Solid(m_font, m_fps->GetValue().c_str(), m_fps->GetColor());
+    if (surface)
+    {
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+        if (texture)
+        {
+            SDL_Rect destRect = { m_fps->GetPos().first, m_fps->GetPos().second, surface->w, surface->h };
+            SDL_RenderCopy(m_renderer, texture, nullptr, &destRect);
+            SDL_DestroyTexture(texture);
+        }
+        SDL_FreeSurface(surface);
+    }
 
-	SDL_Surface* surface = TTF_RenderText_Solid(m_font, m_fps->GetValue().c_str(), m_fps->GetColor());
-	if (!surface)
-	{
-		std::cout << "Error creating text surface: " << TTF_GetError() << std::endl;
-		return;
-	}
+    // Render sprites
+    for (auto sprite : m_sprites)
+    {
+        SDL_Texture* texture = *reinterpret_cast<SDL_Texture**>(sprite->Get());
+        SDL_Rect destRect = { sprite->GetPos().first, sprite->GetPos().second, 100, 100 };
+        SDL_RenderCopy(m_renderer, texture, nullptr, &destRect);
+    }
 
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-	if (!texture)
-	{
-		std::cout << "Error creating text texture: " << SDL_GetError() << std::endl;
-		SDL_FreeSurface(surface);
-		return;
-	}
-
-	SDL_Rect destRect = {m_fps->GetPos().first, m_fps->GetPos().second, surface->w, surface->h};
-	SDL_RenderCopy(m_renderer, texture, NULL, &destRect);
-
-	SDL_FreeSurface(surface);
-	SDL_DestroyTexture(texture);
-
-	for (auto sprite : m_sprites)
-	{
-		SDL_Texture* texture = reinterpret_cast<SDL_Texture*>(sprite->Get());
-		SDL_RenderCopy(m_renderer, texture, NULL, NULL);
-	}
-
-	// Coordonn�es du centre du disque et son rayon
-	int centerX = 320;  // Par exemple, au centre de la fen�tre
-	int centerY = 240;
-	int radius = 50;   // Rayon du disque
-
-	SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-	// Parcourir tous les pixels dans un carr� autour du cercle
-	for (int y = centerY - radius; y <= centerY + radius; y++) 
-	{
-		for (int x = centerX - radius; x <= centerX + radius; x++) 
-		{
-			// V�rifier si le pixel est � l'int�rieur du cercle
-			if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) 
-			{
-				// Dessiner le point � cette position
-				SDL_RenderDrawPoint(m_renderer, x, y);
-			}
-		}
-	}
-
-	SDL_RenderPresent(m_renderer);
+    SDL_RenderPresent(m_renderer);
+    CapFrameRate(60); // Limit FPS
 }
 
 void WindowSDL::Clear()
 {
-	SDL_RenderClear(m_renderer);
+    SDL_RenderClear(m_renderer);
 }
 
 void WindowSDL::Kill()
 {
-	SDL_DestroyWindow(m_window);
-	SDL_DestroyRenderer(m_renderer);
-	//SDL_DestroyTexture(m_texture);
+    // Libération des textures du cache
+    for (auto& [key, texture] : m_textureCache)
+    {
+        SDL_DestroyTexture(texture);
+    }
+    m_textureCache.clear();
 
-	m_window = NULL;
-	m_renderer = NULL;
-	m_sprites.clear();
+    // Libération des sprites
+    for (auto sprite : m_sprites)
+    {
+        delete sprite;
+    }
+    m_sprites.clear();
 
-	if (m_fps) 
-	{
-		if (m_font)
-		{
-			TTF_CloseFont(m_font);
-			m_font = NULL;
-		}
-		delete m_fps;
-		m_fps = NULL;
-	}
+    // Fermeture de la police et suppression de m_fps
+    if (m_fps)
+    {
+        if (m_font)
+        {
+            TTF_CloseFont(m_font);
+            m_font = nullptr;
+        }
+        delete m_fps;
+        m_fps = nullptr;
+    }
 
-	IMG_Quit();
-	SDL_Quit();
+    // Suppression du renderer et de la fenêtre
+    if (m_renderer)
+    {
+        SDL_DestroyRenderer(m_renderer);
+        m_renderer = nullptr;
+    }
+
+    if (m_window)
+    {
+        SDL_DestroyWindow(m_window);
+        m_window = nullptr;
+    }
+
+    // Nettoyage des bibliothèques SDL
+    IMG_Quit();
+    TTF_Quit();
+    SDL_Quit();
 }

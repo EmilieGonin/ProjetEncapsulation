@@ -70,7 +70,7 @@ int WindowSDL::InitLib()
 
 int WindowSDL::CreateWindow()
 {
-    m_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+    m_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W_WINDOW, H_WINDOW, SDL_WINDOW_SHOWN);
     if (!m_window)
     {
         std::cout << "Error creating window: " << SDL_GetError() << std::endl;

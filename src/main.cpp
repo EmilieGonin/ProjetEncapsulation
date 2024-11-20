@@ -15,8 +15,6 @@ int main(int argc, char** args)
 	if (win->InitLib()) return 1;
 	if (win->CreateWindow()) return 1;
 
-	//system("pause");
-
 	while (win->IsWindowCreated())
 	{
 		win->Draw();

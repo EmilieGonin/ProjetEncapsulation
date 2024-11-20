@@ -18,4 +18,6 @@ public:
 protected:
 
 	std::vector<Sprite*> m_sprites;
+	const int W_WINDOW = 500;
+	const int H_WINDOW = 800;
 };

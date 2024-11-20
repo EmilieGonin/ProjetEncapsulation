@@ -9,7 +9,7 @@ int WindowRayLib::InitLib()
 
 int WindowRayLib::CreateWindow()
 {
-	InitWindow(1280, 720, "Projet Encapsulation");
+	InitWindow(W_WINDOW, H_WINDOW, "Projet Encapsulation");
 	m_sprites.push_back(new SpriteRayLib("Pokeball.png", 400, 200));
 	return 0;
 }

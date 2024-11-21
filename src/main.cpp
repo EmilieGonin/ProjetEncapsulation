@@ -43,11 +43,6 @@ int main(int argc, char** args)
 		sprites.push_back(ball->GetSprite());
 	}
 
-    Player* player = win->CreatePlayer();
-    sprites.push_back(player->GetSprite());
-
-	//m_sprites.push_back(win->CreateBrick(1,1)->GetSprite()); //boucle for
-
     PlayerInput* playerInput = nullptr;
 
     if (dynamic_cast<WindowSDL*>(win)) 

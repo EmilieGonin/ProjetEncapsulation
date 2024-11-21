@@ -104,7 +104,17 @@ bool WindowSDL::IsWindowCreated()
     return true;
 }
 
-Ball* WindowSDL::CreatePlayer()
+Player* WindowSDL::CreatePlayer()
+{
+    std::string path = GetResourcePath("Paddle.png");
+    SpriteSDL* sprite = new SpriteSDL(path, m_renderer);
+    int x = (W_WINDOW - sprite->GetWidth()) / 2;
+    int y = (H_WINDOW - sprite->GetHeight()) - (sprite->GetHeight() / 2);
+
+    return new Player(sprite, x, y);
+}
+
+Ball* WindowSDL::CreateBall()
 {
     std::string path = GetResourcePath("Pokeball.png");
     return new Ball(new SpriteSDL(path, m_renderer));

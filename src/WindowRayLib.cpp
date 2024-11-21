@@ -21,7 +21,16 @@ bool WindowRayLib::IsWindowCreated()
 	return !WindowShouldClose();
 }
 
-Ball* WindowRayLib::CreatePlayer()
+Player* WindowRayLib::CreatePlayer()
+{
+	SpriteRayLib* sprite = new SpriteRayLib("Paddle.png");
+	int x = (W_WINDOW - sprite->GetWidth()) / 2;
+	int y = (H_WINDOW - sprite->GetHeight()) - (sprite->GetHeight() / 2);
+
+	return new Player(sprite, x, y);
+}
+
+Ball* WindowRayLib::CreateBall()
 {
 	return new Ball(new SpriteRayLib("Pokeball.png"));
 }

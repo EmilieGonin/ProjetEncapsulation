@@ -2,9 +2,6 @@
 #include "WindowSDL.h"
 #include "WindowRayLib.h"
 
-std::vector<Ball*> m_balls;
-std::vector<Sprite*> m_sprites;
-
 int main(int argc, char** args)
 {
     std::srand(std::time(nullptr));
@@ -26,29 +23,37 @@ int main(int argc, char** args)
     if (win->InitLib()) return 1;
     if (win->CreateWindow()) return 1;
 
+    std::vector<Ball*> balls;
+    std::vector<Sprite*> sprites;
+
     for (size_t i = 0; i < 5; i++)
 	{
-		Ball* ball = win->CreatePlayer();
-		m_balls.push_back(ball);
-		m_sprites.push_back(ball->GetSprite());
+		Ball* ball = win->CreateBall();
+		balls.push_back(ball);
+		sprites.push_back(ball->GetSprite());
 	}
+
+    Player* player = win->CreatePlayer();
+    sprites.push_back(player->GetSprite());
 
 	//m_sprites.push_back(win->CreateBrick(1,1)->GetSprite()); //boucle for
 
 	while (win->IsWindowCreated())
 	{
-		for (auto ball : m_balls)
+		for (auto ball : balls)
 		{
 			ball->UpdatePos(W_WINDOW, H_WINDOW);
 		}
 
-		win->Draw(m_sprites);
+		win->Draw(sprites);
 	}
 
     win->Kill();
     delete win;
 
     // clear sprites
+    balls.clear();
+    sprites.clear();
 
     return 0;
 }

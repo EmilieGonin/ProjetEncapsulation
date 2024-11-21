@@ -7,5 +7,7 @@ class PlayerInputRayLib : public PlayerInput
 {
 public:
 
-	virtual void CheckMouse(Player* player, int windowWidth) override;
+	PlayerInputRayLib(int w);
+
+	virtual void CheckMouse(Player* player) override;
 };

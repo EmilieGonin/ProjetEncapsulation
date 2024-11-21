@@ -101,7 +101,7 @@ bool WindowSDL::IsWindowCreated()
 
 PlayerInput* WindowSDL::InitPlayerInput()
 {
-    return new PlayerInputSDL();
+    return new PlayerInputSDL(W_WINDOW);
 }
 
 Player* WindowSDL::CreatePlayer()

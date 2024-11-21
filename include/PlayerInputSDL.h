@@ -9,5 +9,7 @@ class PlayerInputSDL : public PlayerInput
 {
 public:
 
-    virtual void CheckMouse(Player* player, int windowWidth) override;
+    PlayerInputSDL(int w);
+
+    virtual void CheckMouse(Player* player) override;
 };

@@ -6,5 +6,9 @@ class PlayerInput
 {
 public:
 
-    virtual void CheckMouse(Player* player, int windowWidth) = 0;
+    virtual void CheckMouse(Player* player) = 0;
+
+protected:
+
+    int m_windowWidth;
 };

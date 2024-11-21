@@ -24,7 +24,7 @@ bool WindowRayLib::IsWindowCreated()
 
 PlayerInput* WindowRayLib::InitPlayerInput()
 {
-	return new PlayerInputRayLib();
+	return new PlayerInputRayLib(W_WINDOW);
 }
 
 Player* WindowRayLib::CreatePlayer()

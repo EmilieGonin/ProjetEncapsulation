@@ -2,6 +2,14 @@
 
 #include "Entity.h"
 
+enum class Element
+{
+	Fire,
+	Electrik,
+	Water,
+	Plant
+};
+
 class Brick : public Entity
 {
 public:

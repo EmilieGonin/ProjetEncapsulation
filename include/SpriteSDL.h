@@ -7,7 +7,6 @@
 class SpriteSDL : public Sprite
 {
 public:
-
 	SpriteSDL(std::string path, SDL_Renderer* renderer);
 
 	virtual void* Get() override { return (void*)&m_texture; }
@@ -15,7 +14,6 @@ public:
 	virtual int GetHeight() override { return m_size.second; }
 
 private:
-
 	SDL_Renderer* m_renderer;
 	SDL_Texture* m_texture;
 	std::pair<int, int> m_size;

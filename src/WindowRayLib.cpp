@@ -13,6 +13,7 @@ int WindowRayLib::CreateWindow()
 	m_font = LoadFont("Roboto-Regular.ttf");
 	SetTextureFilter(m_font.texture, TEXTURE_FILTER_POINT);
 	m_fps = new TextRayLib("", { 10, 10 });
+	HideCursor();
 	return 0;
 }
 

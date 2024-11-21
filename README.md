@@ -8,5 +8,5 @@ Pour éxecuter correctement le projet :
     - Dans la section **Environnement**, insérez la ligne suivante :
 
     ```bash
-    PATH=%PATH%;$(ProjectDir)SDL2-2.30.9\lib\x64
+    PATH=%PATH%;$(ProjectDir)SDL2-2.30.9\lib
     ```

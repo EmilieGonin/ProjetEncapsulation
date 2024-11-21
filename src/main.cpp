@@ -43,28 +43,12 @@ int main(int argc, char** args)
 		sprites.push_back(ball->GetSprite());
 	}
 
-    PlayerInput* playerInput = nullptr;
-
-    if (dynamic_cast<WindowSDL*>(win)) 
-    {
-        playerInput = new PlayerInputSDL();
-    }
-    else if (dynamic_cast<WindowRayLib*>(win)) 
-    {
-        playerInput = new PlayerInputRayLib();
-    }
+    PlayerInput* playerInput = win->InitPlayerInput();
 
 	while (win->IsWindowCreated())
 	{
-		for (auto ball : balls)
-		{
-			ball->UpdatePos(W_WINDOW, H_WINDOW);
-		}
-
-        if (playerInput) {
-            playerInput->CheckMouse(player); // D�placement du paddle selon l'entr�e de la souris
-        }
-
+		for (auto ball : balls) ball->UpdatePos(W_WINDOW, H_WINDOW);
+        if (playerInput) playerInput->CheckMouse(player);
 		win->Draw(sprites);
 	}
 
@@ -73,7 +57,8 @@ int main(int argc, char** args)
     delete player;
     delete playerInput;
 
-    // clear sprites
+    for (auto sprite : sprites) delete sprite;
+    sprites.clear();
     balls.clear();
     sprites.clear();
 

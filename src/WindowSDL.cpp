@@ -99,6 +99,11 @@ bool WindowSDL::IsWindowCreated()
     return true;
 }
 
+PlayerInput* WindowSDL::InitPlayerInput()
+{
+    return new PlayerInputSDL();
+}
+
 Player* WindowSDL::CreatePlayer()
 {
     std::string path = GetResourcePath("Paddle.png");
@@ -124,10 +129,7 @@ void WindowSDL::Draw(std::vector<Sprite*> sprites)
 {
     SDL_Event event;
     SDL_PollEvent(&event);
-    if (event.type == SDL_QUIT)
-    {
-        Kill();
-    }
+    if (event.type == SDL_QUIT) Kill();
 
     Uint32 startTicks = SDL_GetTicks();
 
@@ -182,13 +184,6 @@ void WindowSDL::Kill()
         SDL_DestroyTexture(texture);
     }
     m_textureCache.clear();
-
-    // Libération des sprites
-    /*for (auto sprite : m_sprites)
-    {
-        delete sprite;
-    }
-    m_sprites.clear();*/
 
     if (m_fps)
     {

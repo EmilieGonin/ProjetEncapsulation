@@ -22,6 +22,11 @@ bool WindowRayLib::IsWindowCreated()
 	return !WindowShouldClose();
 }
 
+PlayerInput* WindowRayLib::InitPlayerInput()
+{
+	return new PlayerInputRayLib();
+}
+
 Player* WindowRayLib::CreatePlayer()
 {
 	SpriteRayLib* sprite = new SpriteRayLib("Paddle.png");
@@ -64,15 +69,10 @@ void WindowRayLib::Draw(std::vector<Sprite*> sprites)
 
 void WindowRayLib::Clear()
 {
-	/*for (auto sprite : m_sprites)
-	{
-		Texture2D texture = *reinterpret_cast<Texture2D*>(sprite->Get());
-		UnloadTexture(texture);
-	}*/
 }
 
 void WindowRayLib::Kill()
 {
-	//unload font
+	UnloadFont(m_font);
 	CloseWindow();
 }

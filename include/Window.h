@@ -14,7 +14,6 @@
 class Window
 {
 public:
-
 	virtual int InitLib() = 0;
 	virtual int CreateWindow() = 0;
 	virtual bool IsWindowCreated() = 0;
@@ -26,6 +25,5 @@ public:
 	virtual void Kill() = 0;
 
 protected:
-
 	Text* m_fps = nullptr;
 };

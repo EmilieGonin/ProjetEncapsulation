@@ -1,6 +1,8 @@
 #include "Window.h"
 #include "WindowSDL.h"
+#include "PlayerInputSDL.h"
 #include "WindowRayLib.h"
+#include "PlayerInputRayLib.h"
 
 int main(int argc, char** args)
 {
@@ -16,8 +18,8 @@ int main(int argc, char** args)
     }
     else 
     {
-        win = new WindowSDL();
-        //win = new WindowRayLib();
+        //win = new WindowSDL();
+        win = new WindowRayLib();
     }
 
     if (win->InitLib()) return 1;
@@ -38,21 +40,33 @@ int main(int argc, char** args)
 
 	//m_sprites.push_back(win->CreateBrick(1,1)->GetSprite()); //boucle for
 
+    PlayerInput* playerInput = nullptr;
+
+    if (dynamic_cast<WindowSDL*>(win)) {
+        playerInput = new PlayerInputSDL(); // Utilisation de PlayerInputSDL pour SDL
+    }
+    else if (dynamic_cast<WindowRayLib*>(win)) {
+        playerInput = new PlayerInputRayLib(); // Utilisation de PlayerInputRayLib pour Raylib
+    }
+
 	while (win->IsWindowCreated())
 	{
 		for (auto ball : balls)
 		{
 			ball->UpdatePos(W_WINDOW, H_WINDOW);
-            //playerInput->CheckMouse(player)
-            //player->SetPos(x, y)
-            //player->GetPos().second <- axe y du player
 		}
+
+        if (playerInput) {
+            playerInput->CheckMouse(player); // Déplacement du paddle selon l'entrée de la souris
+        }
 
 		win->Draw(sprites);
 	}
 
     win->Kill();
     delete win;
+    delete player;
+    delete playerInput;
 
     // clear sprites
     balls.clear();

@@ -46,7 +46,7 @@ int main(int argc, char** args)
 	while (win->IsWindowCreated())
 	{
 		for (auto ball : balls) ball->UpdatePos(W_WINDOW, H_WINDOW);
-        if (playerInput) playerInput->CheckMouse(player);
+        if (playerInput) playerInput->CheckMouse(player, W_WINDOW);
 		win->Draw(sprites);
 	}
 

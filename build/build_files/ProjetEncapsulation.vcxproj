@@ -100,7 +100,7 @@
     <TargetName>ProjetEncapsulation</TargetName>
     <TargetExt>.exe</TargetExt>
     <IncludePath>$(ProjectDir)SDL2-2.30.9\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)SDL2-2.30.9\lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)SDL2-2.30.9\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>

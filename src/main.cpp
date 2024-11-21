@@ -43,6 +43,9 @@ int main(int argc, char** args)
 		for (auto ball : balls)
 		{
 			ball->UpdatePos(W_WINDOW, H_WINDOW);
+            //playerInput->CheckMouse(player)
+            //player->SetPos(x, y)
+            //player->GetPos().second <- axe y du player
 		}
 
 		win->Draw(sprites);

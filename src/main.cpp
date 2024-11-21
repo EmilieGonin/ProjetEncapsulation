@@ -50,11 +50,13 @@ int main(int argc, char** args)
 
     PlayerInput* playerInput = nullptr;
 
-    if (dynamic_cast<WindowSDL*>(win)) {
-        playerInput = new PlayerInputSDL(); // Utilisation de PlayerInputSDL pour SDL
+    if (dynamic_cast<WindowSDL*>(win)) 
+    {
+        playerInput = new PlayerInputSDL();
     }
-    else if (dynamic_cast<WindowRayLib*>(win)) {
-        playerInput = new PlayerInputRayLib(); // Utilisation de PlayerInputRayLib pour Raylib
+    else if (dynamic_cast<WindowRayLib*>(win)) 
+    {
+        playerInput = new PlayerInputRayLib();
     }
 
 	while (win->IsWindowCreated())

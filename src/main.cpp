@@ -1,8 +1,8 @@
-#include "Window.h"
 #include "WindowSDL.h"
 #include "PlayerInputSDL.h"
 #include "WindowRayLib.h"
 #include "PlayerInputRayLib.h"
+#include "GameManager.h"
 
 int main(int argc, char** args)
 {
@@ -22,11 +22,19 @@ int main(int argc, char** args)
         win = new WindowRayLib();
     }
 
+    GameManager* gm = new GameManager();
+
     if (win->InitLib()) return 1;
     if (win->CreateWindow()) return 1;
 
     std::vector<Ball*> balls;
     std::vector<Sprite*> sprites;
+
+    Player* player = win->CreatePlayer();
+    sprites.push_back(player->GetSprite());
+
+    std::vector<Brick*> bricks = gm->CreateBricks(win);
+    for (auto brick : bricks) sprites.push_back(brick->GetSprite());
 
     for (size_t i = 0; i < 5; i++)
 	{
@@ -57,7 +65,7 @@ int main(int argc, char** args)
 		}
 
         if (playerInput) {
-            playerInput->CheckMouse(player); // Déplacement du paddle selon l'entrée de la souris
+            playerInput->CheckMouse(player); // Dï¿½placement du paddle selon l'entrï¿½e de la souris
         }
 
 		win->Draw(sprites);

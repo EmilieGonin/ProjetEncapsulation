@@ -19,7 +19,7 @@ public:
 	virtual bool IsWindowCreated() = 0;
 	virtual Player* CreatePlayer() = 0;
 	virtual Ball* CreateBall() = 0;
-	virtual Brick* CreateBrick(int x, int y) = 0;
+	virtual Brick* CreateBrick(int x, int y, std::string filename) = 0;
 	virtual void Draw(std::vector<Sprite*> sprites) = 0;
 	virtual void Clear() = 0;
 	virtual void Kill() = 0;

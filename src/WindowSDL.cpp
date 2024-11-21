@@ -114,9 +114,9 @@ Ball* WindowSDL::CreateBall()
     return new Ball(new SpriteSDL(path, m_renderer));
 }
 
-Brick* WindowSDL::CreateBrick(int x, int y)
+Brick* WindowSDL::CreateBrick(int x, int y, std::string filename)
 {
-    std::string path = GetResourcePath("Pokeball.png");
+    std::string path = GetResourcePath(filename + ".png");
     return new Brick(new SpriteSDL(path, m_renderer), x, y);
 }
 

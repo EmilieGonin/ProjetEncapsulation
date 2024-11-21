@@ -35,9 +35,9 @@ Ball* WindowRayLib::CreateBall()
 	return new Ball(new SpriteRayLib("Pokeball.png"));
 }
 
-Brick* WindowRayLib::CreateBrick(int x, int y)
+Brick* WindowRayLib::CreateBrick(int x, int y, std::string filename)
 {
-	return new Brick(new SpriteRayLib("Pokeball.png"), x, y);
+	return new Brick(new SpriteRayLib(filename), x, y);
 }
 
 void WindowRayLib::Draw(std::vector<Sprite*> sprites)

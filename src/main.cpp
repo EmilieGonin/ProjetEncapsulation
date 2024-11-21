@@ -16,8 +16,8 @@ int main(int argc, char** args)
     }
     else 
     {
-        win = new WindowSDL();
-        //win = new WindowRayLib();
+        //win = new WindowSDL();
+        win = new WindowRayLib();
     }
 
     GameManager* gm = new GameManager();

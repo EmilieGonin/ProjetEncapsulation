@@ -1,7 +1,5 @@
 #include "WindowSDL.h"
-#include "PlayerInputSDL.h"
 #include "WindowRayLib.h"
-#include "PlayerInputRayLib.h"
 #include "GameManager.h"
 
 int main(int argc, char** args)
@@ -18,8 +16,8 @@ int main(int argc, char** args)
     }
     else 
     {
-        //win = new WindowSDL();
-        win = new WindowRayLib();
+        win = new WindowSDL();
+        //win = new WindowRayLib();
     }
 
     GameManager* gm = new GameManager();
@@ -43,33 +41,12 @@ int main(int argc, char** args)
 		sprites.push_back(ball->GetSprite());
 	}
 
-    Player* player = win->CreatePlayer();
-    sprites.push_back(player->GetSprite());
-
-	//m_sprites.push_back(win->CreateBrick(1,1)->GetSprite()); //boucle for
-
-    PlayerInput* playerInput = nullptr;
-
-    if (dynamic_cast<WindowSDL*>(win)) 
-    {
-        playerInput = new PlayerInputSDL();
-    }
-    else if (dynamic_cast<WindowRayLib*>(win)) 
-    {
-        playerInput = new PlayerInputRayLib();
-    }
+    PlayerInput* playerInput = win->InitPlayerInput();
 
 	while (win->IsWindowCreated())
 	{
-		for (auto ball : balls)
-		{
-			ball->UpdatePos(W_WINDOW, H_WINDOW);
-		}
-
-        if (playerInput) {
-            playerInput->CheckMouse(player); // D�placement du paddle selon l'entr�e de la souris
-        }
-
+        if (playerInput) playerInput->CheckMouse(player);
+		for (auto ball : balls) ball->UpdatePos(W_WINDOW, H_WINDOW);
 		win->Draw(sprites);
 	}
 
@@ -78,7 +55,8 @@ int main(int argc, char** args)
     delete player;
     delete playerInput;
 
-    // clear sprites
+    for (auto sprite : sprites) delete sprite;
+    sprites.clear();
     balls.clear();
     sprites.clear();
 

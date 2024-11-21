@@ -2,11 +2,14 @@
 
 #define SDL_MAIN_HANDLED
 
-#include "PlayerInput.h"
 #include <SDL.h>
+#include "PlayerInput.h"
 
 class PlayerInputSDL : public PlayerInput
 {
 public:
-    void CheckMouse(Player* player) override; // Méthode pour gérer le déplacement avec la souris
+
+    PlayerInputSDL(int w);
+
+    virtual void CheckMouse(Player* player) override;
 };

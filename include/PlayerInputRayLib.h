@@ -1,9 +1,13 @@
 #pragma once
+
 #include "PlayerInput.h"
 #include "raylib.h"
 
 class PlayerInputRayLib : public PlayerInput
 {
 public:
-	void CheckMouse(Player* player) override;
+
+	PlayerInputRayLib(int w);
+
+	virtual void CheckMouse(Player* player) override;
 };

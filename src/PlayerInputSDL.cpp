@@ -1,6 +1,11 @@
 #pragma once
 #include "PlayerInputSDL.h"
 
+PlayerInputSDL::PlayerInputSDL(int w)
+{
+    m_windowWidth = w;
+}
+
 void PlayerInputSDL::CheckMouse(Player* player)
 {
     SDL_Event event;
@@ -11,7 +16,7 @@ void PlayerInputSDL::CheckMouse(Player* player)
             int newX = event.motion.x - player->GetSprite()->GetWidth() / 2; // Centrer le paddle
 
             if (newX < 0) newX = 0;
-            if (newX > W_WINDOW - player->GetSprite()->GetWidth()) newX = W_WINDOW - player->GetSprite()->GetWidth();
+            if (newX > m_windowWidth - player->GetSprite()->GetWidth()) newX = m_windowWidth - player->GetSprite()->GetWidth();
 
             auto currentPos = player->GetSprite()->GetPos();
             int newY = currentPos.second;

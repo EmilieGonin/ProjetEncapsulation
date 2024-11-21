@@ -1,7 +1,5 @@
 #include "WindowSDL.h"
-#include "PlayerInputSDL.h"
 #include "WindowRayLib.h"
-#include "PlayerInputRayLib.h"
 #include "GameManager.h"
 
 int main(int argc, char** args)
